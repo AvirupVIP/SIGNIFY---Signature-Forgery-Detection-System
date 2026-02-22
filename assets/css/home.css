@@ -501,9 +501,15 @@ html.dark ::-webkit-scrollbar-thumb {
     font-weight: 600;
 }
 
-.contact-item p {
+.contact-item a {
     font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+    color: inherit;
+}
 
+.contact-item a:hover {
+    color: var(--purple-light);
 }
 
 .contact-form {
@@ -543,12 +549,24 @@ html.dark ::-webkit-scrollbar-thumb {
 }
 
 .form-group input:focus+label,
-.form-group input:valid+label,
+.form-group input:not(:placeholder-shown)+label,
 .form-group textarea:focus+label,
-.form-group textarea:valid+label {
+.form-group textarea:not(:placeholder-shown)+label {
     top: -12px;
     font-size: 15px;
+}
 
+/* Red underline only when invalid */
+.form-group:has(input:invalid:not(:placeholder-shown)),
+.form-group:has(textarea:invalid:not(:placeholder-shown)) {
+    border-bottom: 1.3px solid #ff0000;
+}
+
+/* Optional: make label red too */
+.form-group:has(input:invalid:not(:placeholder-shown)) label,
+.form-group:has(textarea:invalid:not(:placeholder-shown)) label {
+    color: #ff0000;
+    font-weight: 550;
 }
 
 .btn-gradient {
@@ -588,23 +606,13 @@ html.dark ::-webkit-scrollbar-thumb {
 }
 
 
-
-/* ================= FOOTER ================= */
-footer {
-    padding: 60px 0;
+/* ================= PREMIUM FOOTER  ================= */
+.footer {
+    padding: 60px 0 40px;
+    background: var(--dark);
+    color: white;
     text-align: center;
     font-size: 15px;
-    opacity: 0.8;
-}
-
-
-
-
-/* ================= FOOTER PREMIUM ================= */
-.footer {
-    padding: 80px 0 40px;
-    background: #0f172a;
-    color: white;
 }
 
 .footer-container {
@@ -614,15 +622,61 @@ footer {
 }
 
 .footer-logo {
-    font-size: 24px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--light);
+    transition: 0.3s ease;
+}
+
+/* Gradient hover like navbar */
+.footer-logo:hover {
     background: linear-gradient(135deg, var(--purple), var(--purple-light));
+    background-clip: text;
+    /* Standard */
     -webkit-background-clip: text;
+    /* Chrome / Safari */
+
+    color: transparent;
+    /* Fallback */
     -webkit-text-fill-color: transparent;
+}
+
+.footer-tagline {
+    margin-top: 13.5px;
+    margin-left: 5px;
+    display: flex;
+    font-size: 14.5px;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .footer-col h4 {
     margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.footer-item {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: var(--light);
+}
+
+/* Remove default link styling */
+.footer-item[href] {
+    text-decoration: none;
+    color: var(--light);
+    transition: 0.3s ease;
+}
+
+/* Hover effect only for clickable links */
+.footer-item[href]:hover {
+    color: var(--purple-light);
 }
 
 .footer-social i {
@@ -633,7 +687,7 @@ footer {
 }
 
 .footer-social i:hover {
-    color: var(--purple);
+    color: var(--purple-light);
     transform: translateY(-3px);
 }
 
@@ -642,6 +696,8 @@ footer {
     margin-top: 60px;
     opacity: .6;
 }
+
+
 
 /* ================= SCROLL UP ================= */
 
