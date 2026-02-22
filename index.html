@@ -25,7 +25,6 @@
                 Signify
             </a>
 
-
             <div class="nav-menu">
                 <a href="#home" class="active">Home</a>
                 <a href="#about">About</a>
@@ -108,7 +107,9 @@
                         <i class="ri-phone-line"></i>
                         <div>
                             <h4>Call us</h4>
-                            <p>+91 012 345 6789</p>
+                            <a href="tel:+910123456789">
+                                +91 012 345 6789
+                            </a>
                         </div>
                     </div>
 
@@ -116,7 +117,9 @@
                         <i class="ri-mail-line"></i>
                         <div>
                             <h4>Email us</h4>
-                            <p>support@signify.com</p>
+                            <a href="mailto:support@signify.com?subject=Support Request&body=Hello Signify Team,">
+                                support@signify.com
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -125,17 +128,17 @@
             <!--Contact Form-->
             <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent!')">
                 <div class="form-group">
-                    <input type="text" name="username" id="username" autocomplete="name" required>
+                    <input type="text" name="username" id="username" autocomplete="name" placeholder=" " required>
                     <label for="username">Your Name</label>
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="useremail" id="useremail" autocomplete="email" required>
+                    <input type="email" name="useremail" id="useremail" autocomplete="email" placeholder=" " required>
                     <label for="useremail">Your Email</label>
                 </div>
 
                 <div class="form-group textarea">
-                    <textarea name="usermessage" id="usermessage" required></textarea>
+                    <textarea name="usermessage" id="usermessage" placeholder=" " required></textarea>
                     <label for="usermessage">Your Message</label>
                 </div>
 
@@ -150,22 +153,29 @@
     <!--FOOTER-->
     <footer class="footer">
         <div class="container footer-container">
-
             <div class="footer-col">
-                <h3 class="footer-logo">Signify</h3>
-                <p>Secure. Verify. Protect.</p>
+                <a href="#" class="footer-logo footer-brand">
+                    <img src="assets/img/Signify_logo.png" alt="Signify logo" class="nav-logo-img">
+                    Signify
+                </a>
+                <p class="footer-tagline">Secure. Verify. Protect.</p>
             </div>
 
             <div class="footer-col">
                 <h4>Company</h4>
-                <p>About</p>
-                <p>Contact</p>
+                <a href="#about" class="footer-item">About</a>
+                <a href="#contact" class="footer-item">Contact</a>
             </div>
 
             <div class="footer-col">
                 <h4>Contact</h4>
-                <p>support@signify.com</p>
-                <p>+91 012 345 6789</p>
+                <a href="mailto:support@signify.com?subject=Support Request&body=Hello Signify Team,"
+                    class="footer-item">
+                    support@signify.com
+                </a>
+                <a href="tel:+910123456789" class="footer-item">
+                    +91 012 345 6789
+                </a>
             </div>
 
             <div class="footer-col">
