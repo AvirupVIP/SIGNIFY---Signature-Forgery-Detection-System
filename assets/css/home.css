@@ -40,7 +40,7 @@ html.dark body {
 .section {
     min-height: auto;
     padding: 78px 0 75px;
-    scroll-margin-top: 90px;
+    scroll-margin-top: 40px;
     /* 90px navbar + small buffer */
 }
 
@@ -844,4 +844,5 @@ html.dark ::-webkit-scrollbar-thumb {
         display: block;
     }
 }
+
 
