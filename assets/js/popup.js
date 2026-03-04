@@ -104,11 +104,22 @@ document.addEventListener("DOMContentLoaded", function () {
     /* ================= CLOSE ON ESC KEY ================= */
 
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("show")) {
-            closePopup();
+        if (e.key === "Escape") {
+
+            const overlay = document.getElementById("imageOverlay");
+
+            // If image preview is open → close only image
+            if (overlay) {
+                overlay.remove();
+                return;
+            }
+
+            // Otherwise close modal
+            if (modal.classList.contains("show")) {
+                closePopup();
+            }
         }
     });
-
 
     /* ================= UPLOAD CLICK ================= */
 
@@ -318,6 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function openFullImage(src) {
 
         const overlay = document.createElement("div");
+        overlay.id = "imageOverlay";
         overlay.style.position = "fixed";
         overlay.style.inset = "0";
         overlay.style.background = "rgba(0,0,0,0.85)";
@@ -346,20 +358,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         function closeViewer() {
             document.body.removeChild(overlay);
-            document.removeEventListener("keydown", escHandler);
         }
 
         closeBtn.addEventListener("click", closeViewer);
-
         overlay.addEventListener("click", (e) => {
             if (e.target === overlay) closeViewer();
         });
 
-        function escHandler(e) {
-            if (e.key === "Escape") closeViewer();
-        }
-
-        document.addEventListener("keydown", escHandler);
     }
 
 });
