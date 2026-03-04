@@ -438,7 +438,7 @@ html.dark .scan-result {
 
 .about-image img {
     display: block;
-    width: 80%;
+    width: 75%;
     height: auto;
 
 }
@@ -844,6 +844,7 @@ html.dark ::-webkit-scrollbar-thumb {
         display: block;
     }
 }
+
 
 
 
