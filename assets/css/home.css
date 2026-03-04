@@ -40,8 +40,8 @@ html.dark body {
 .section {
     min-height: auto;
     padding: 78px 0 75px;
-    scroll-margin-top: 100px;
-    /* 90px navbar + small buffer */
+    scroll-margin-top: 75px;
+    
 }
 
 
@@ -611,7 +611,7 @@ html.dark ::-webkit-scrollbar-thumb {
 
 
 #contact {
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 75px);
 }
 
 /* ================= PREMIUM FOOTER  ================= */
@@ -844,6 +844,7 @@ html.dark ::-webkit-scrollbar-thumb {
         display: block;
     }
 }
+
 
 
 
