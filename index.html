@@ -10,6 +10,13 @@
     <!-- Remix Icon CDN -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
+    <!--GOOGLE FONT-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- External CSS File -->
     <link rel="stylesheet" href="assets/css/home.css" />
     <link rel="stylesheet" href="assets/css/popup.css" />
@@ -25,13 +32,23 @@
                 Signify
             </a>
 
-            <div class="nav-menu">
+            <div class="nav-menu" id="navMenu">
+
+                <!-- CLOSE BUTTON -->
+                <i class="ri-close-line nav-close" id="navClose"></i>
+
                 <a href="#home" class="active">Home</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact Us</a>
             </div>
 
-            <i class="ri-moon-line theme-toggle" id="themeToggle"></i>
+            <div class="nav-icons">
+                <!-- Light/Dark Mode Theme Toggle Icon -->
+                <i class="ri-moon-line theme-toggle" id="themeToggle"></i>
+
+                <!-- Hamburger Menu Icon -->
+                <i class="ri-menu-line hamburger" id="hamburger"></i>
+            </div>
         </div>
     </nav>
 
@@ -126,7 +143,7 @@
             </div>
 
             <!--Contact Form-->
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message Sent!')">
+            <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <input type="text" name="username" id="username" autocomplete="name" placeholder=" " required>
                     <label for="username">Your Name</label>
@@ -261,6 +278,7 @@
                     <button class="btn-verifysavecustomer" id="verifyBtn">Verify</button>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -272,4 +290,3 @@
 </body>
 
 </html>
-
