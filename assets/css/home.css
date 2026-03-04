@@ -38,10 +38,10 @@ html.dark body {
 }
 
 .section {
-    min-height: 100vh;
-    padding-top: 40px;
-    display: flex;
-    align-items: center;
+    min-height: auto;
+    padding: 78px 0 75px;
+    scroll-margin-top: 100px;
+    /* 90px navbar + small buffer */
 }
 
 
@@ -179,8 +179,8 @@ html.dark .nav-logo {
 
 /* ================= HERO ================= */
 .hero {
-    padding-top: 80px;
-    min-height: 100vh;
+    height: 92vh;
+    padding-top: 90px;
     display: flex;
     align-items: center;
 }
@@ -366,7 +366,7 @@ html.dark .scan-result {
 .about-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 100px;
+    gap: 50px;
     align-items: center;
 }
 
@@ -437,9 +437,9 @@ html.dark .scan-result {
 }
 
 .about-image img {
-    width: 100%;
-    height: 100%;
-    padding-top: 16px;
+    display: block;
+    width: 80%;
+    height: auto;
 
 }
 
@@ -473,8 +473,7 @@ html.dark ::-webkit-scrollbar-thumb {
 .contact-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 90px;
-    width: 1300px;
+    gap: 50px;
     align-items: center;
 }
 
@@ -610,6 +609,10 @@ html.dark ::-webkit-scrollbar-thumb {
     transition: transform 0.3s ease;
 }
 
+
+#contact {
+    min-height: calc(100vh - 90px);
+}
 
 /* ================= PREMIUM FOOTER  ================= */
 .footer {
