@@ -101,7 +101,7 @@ html.dark nav {
 
 .nav-menu {
     display: flex;
-    gap: 100px;
+    gap: 120px;
 }
 
 .nav-menu a {
@@ -844,6 +844,7 @@ html.dark ::-webkit-scrollbar-thumb {
         display: block;
     }
 }
+
 
 
 
