@@ -1152,6 +1152,7 @@ html.dark ::-webkit-scrollbar-thumb {
 
     .hero-text p {
         font-size: 14.8px;
+        margin-bottom: 30px;
     }
 
     .hero-buttons button {
@@ -1234,4 +1235,5 @@ html.dark ::-webkit-scrollbar-thumb {
     .footer-copy {
         font-size: 13px;
     }
+
 }
