@@ -1155,6 +1155,10 @@ html.dark ::-webkit-scrollbar-thumb {
         margin-bottom: 30px;
     }
 
+    .hero-buttons {
+        gap: 10px;
+    }
+    
     .hero-buttons button {
         width: 100%;
         max-width: 245px;
@@ -1237,3 +1241,4 @@ html.dark ::-webkit-scrollbar-thumb {
     }
 
 }
+
