@@ -1159,7 +1159,7 @@ html.dark ::-webkit-scrollbar-thumb {
     }
 
     .nav-menu a::after {
-        height: 1px;
+        height: 2px;
     }
 
     .nav-close {
@@ -1279,3 +1279,4 @@ html.dark ::-webkit-scrollbar-thumb {
     }
 
 }
+
