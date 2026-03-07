@@ -843,6 +843,10 @@ html.dark ::-webkit-scrollbar-thumb {
         z-index: 2000;
     }
 
+    .nav-menu a {
+        display: inline-block;
+        width: fit-content;
+    }
 
     html.dark .nav-menu {
         background: var(--dark);
@@ -1146,8 +1150,20 @@ html.dark ::-webkit-scrollbar-thumb {
 =========================== */
 @media (max-width: 480px) {
 
-    .hero-text h1 {
-        font-size: 27px;
+    .nav-menu {
+        gap: 50px;
+    }
+
+    .nav-menu a {
+        font-size: 16px;
+    }
+
+    .nav-menu a::after {
+        height: 1px;
+    }
+
+    .nav-close {
+        font-size: 26.8px;
     }
 
     .hero-text p {
@@ -1158,7 +1174,7 @@ html.dark ::-webkit-scrollbar-thumb {
     .hero-buttons {
         gap: 10px;
     }
-    
+
     .hero-buttons button {
         width: 100%;
         max-width: 245px;
@@ -1181,10 +1197,15 @@ html.dark ::-webkit-scrollbar-thumb {
         font-size: 14.8px;
     }
 
+    .check-list {
+        width: fit-content;
+        margin: 0 auto;
+    }
+
     .check-list li {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 12px;
         margin-bottom: 18px;
         font-size: 15px;
     }
@@ -1233,12 +1254,28 @@ html.dark ::-webkit-scrollbar-thumb {
         padding: 14.5px;
     }
 
+    .footer-col:first-child {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
+    .footer-logo {
+        justify-content: center;
+    }
 
+    .footer-tagline {
+        margin-left: 0;
+        text-align: center;
+        display: block;
+    }
+
+    .scrollup__icon {
+        font-size: 17.5px;
+    }
 
     .footer-copy {
-        font-size: 13px;
+        font-size: 13.8px;
     }
 
 }
-
