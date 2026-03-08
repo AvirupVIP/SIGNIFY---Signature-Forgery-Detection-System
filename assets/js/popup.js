@@ -274,24 +274,49 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // If everything is valid
-        alert("Customer Saved Successfully!");
+        // If everything is valid → send to backend
 
-        // Reset inputs
-        document.getElementById("customerName").value = "";
-        document.getElementById("customerId").value = "";
+        const formData = new FormData();
 
-        // Reset uploaded files
-        selectedFiles = [];
-        signaturePreview.innerHTML = "";
-        signatureInput.value = "";
+        formData.append("customerName", customerName);
+        formData.append("customerId", customerId);
 
-        // Clear warning
-        warningBox.innerText = "";
+        selectedFiles.forEach(file => {
+            formData.append("signatures", file);
+        });
 
-        // Close popup
-        closePopup();
+        fetch("http://127.0.0.1:5000/add-customer", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
 
+                if (data.success) {
+
+                    alert("Customer Saved Successfully!");
+
+                    // Reset inputs
+                    document.getElementById("customerName").value = "";
+                    document.getElementById("customerId").value = "";
+
+                    selectedFiles = [];
+                    signaturePreview.innerHTML = "";
+                    signatureInput.value = "";
+
+                    warningBox.innerText = "";
+
+                    closePopup();
+
+                } else {
+                    warningBox.innerText = data.message || "Failed to save customer.";
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+                warningBox.innerText = "Server error. Make sure Flask backend is running.";
+            });
     });
 
 
