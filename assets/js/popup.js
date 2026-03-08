@@ -338,16 +338,34 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // If validation passes, trigger external verification logic
-        document.dispatchEvent(new CustomEvent("verifyFormValid", {
-            detail: {
-                customerId: verifyId,
-                file: verifySelectedFile
-            }
-        }));
+        const formData = new FormData();
+        formData.append("customerId", verifyId);
+        formData.append("signature", verifySelectedFile);
+
+        fetch("http://127.0.0.1:5000/verify-signature", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.success) {
+
+                    verifyWarning.innerHTML =
+                        "<b>Result:</b> " + data.result + "<br>" +
+                        "<b>Confidence:</b> " + data.confidence + "%";
+
+                } else {
+                    verifyWarning.innerText = data.error || "Verification failed.";
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+                verifyWarning.innerText = "Server error. Make sure Flask backend is running.";
+            });
 
     });
-
 
     /* ================= FULL SCREEN VIEW ================= */
 
