@@ -1,0 +1,11 @@
+tensorflow==2.20.0-rc0
+keras==3.11.0
+numpy==2.2.3
+pandas==3.0.0
+scikit-learn==1.8.0
+matplotlib==3.10.0
+protobuf==6.31.1
+opencv-python
+flask
+flask-cors
+#Python 3.13 (3.13.12)

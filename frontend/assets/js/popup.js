@@ -1,0 +1,447 @@
+document.addEventListener("DOMContentLoaded", function () {
+
+    const modal = document.getElementById("modal");
+    const openAdd = document.getElementById("openAdd");
+    const closeModal = document.getElementById("closeModal");
+
+    const addForm = document.getElementById("addForm");
+
+    const signatureInput = document.getElementById("signatureFiles");
+    const signaturePreview = document.getElementById("signaturePreview");
+    const addUploadArea = document.getElementById("addUploadArea");
+    const saveBtn = document.getElementById("saveCustomer");
+
+    const warningBox = document.getElementById("addWarning");
+
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+    const minFiles = 6;
+    const maxFiles = 12;
+
+    let selectedFiles = [];
+
+    /* ================= VERIFY FORM ELEMENTS ================= */
+
+    const verifyForm = document.getElementById("verifyForm");
+    const openVerify = document.getElementById("openVerify");
+    const verifyFileInput = document.getElementById("verifyFile");
+    const verifyUploadArea = document.getElementById("verifyUploadArea");
+    const verifyPreview = document.getElementById("verifyPreview");
+    const verifyBtn = document.getElementById("verifyBtn");
+    const verifyResult = document.getElementById("verifyResult");
+
+    let verifySelectedFile = null;
+
+
+
+    /* ================= CLOSE POPUP FUNCTION ================= */
+
+    function closePopup() {
+
+        // Close modal
+        modal.classList.remove("show");
+        document.body.classList.remove("modal-open");
+
+        // Reset inputs
+        document.getElementById("customerName").value = "";
+        document.getElementById("customerId").value = "";
+
+        // Reset images
+        selectedFiles = [];
+        signaturePreview.innerHTML = "";
+        signatureInput.value = "";
+
+        // Clear warnings
+        warningBox.innerText = "";
+
+
+        // Reset Verify form
+        document.getElementById("verifyId").value = "";
+        verifySelectedFile = null;
+        verifyPreview.innerHTML = "";
+        verifyFileInput.value = "";
+        verifyResult.innerHTML = "";
+
+        addForm.classList.remove("active");
+        verifyForm.classList.remove("active");
+
+    }
+
+
+    /* ================= OPEN MODAL ================= */
+
+    openAdd?.addEventListener("click", () => {
+        modal.classList.add("show");
+        addForm.classList.add("active");
+        document.body.classList.add("modal-open"); // disable scroll
+        warningBox.innerText = "";
+    });
+
+    /* ================= OPEN VERIFY MODAL ================= */
+
+    openVerify?.addEventListener("click", () => {
+        modal.classList.add("show");
+
+        addForm.classList.remove("active");   // hide add form
+        verifyForm.classList.add("active");   // show verify form
+
+        document.body.classList.add("modal-open");
+
+        verifyResult.innerHTML = "";       // clear old result
+    });
+
+    closeModal.addEventListener("click", closePopup);
+
+
+
+    /* ================= CLOSE ON BACKGROUND CLICK ================= */
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closePopup();
+        }
+    });
+
+    /* ================= CLOSE ON ESC KEY ================= */
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+
+            const overlay = document.getElementById("imageOverlay");
+
+            // If image preview is open → close only image
+            if (overlay) {
+                overlay.remove();
+                return;
+            }
+
+            // Otherwise close modal
+            if (modal.classList.contains("show")) {
+                closePopup();
+            }
+        }
+    });
+
+    /* ================= UPLOAD CLICK ================= */
+
+    addUploadArea.addEventListener("click", () => {
+        signatureInput.click();
+    });
+
+    /* ================= VERIFY UPLOAD CLICK ================= */
+
+    verifyUploadArea?.addEventListener("click", () => {
+        verifyFileInput.click();
+    });
+
+
+    /* ================= FILE UPLOAD ================= */
+
+    signatureInput.addEventListener("change", function () {
+
+        const files = Array.from(this.files);
+        warningBox.innerText = "";
+
+        for (let file of files) {
+
+            if (!allowedTypes.includes(file.type)) {
+                warningBox.innerText = "File type not supported! Only PNG, JPG, JPEG allowed.";
+                continue;
+            }
+
+            if (selectedFiles.length >= maxFiles) {
+                warningBox.innerText = "Maximum 12 images allowed.";
+                break;
+            }
+
+            selectedFiles.push(file);
+        }
+
+        renderPreview();
+        signatureInput.value = "";
+    });
+
+    /* ================= VERIFY FILE UPLOAD ================= */
+
+    verifyFileInput?.addEventListener("change", function () {
+
+        const file = this.files[0];
+        verifyResult.innerHTML = "";
+
+        if (!file) return;
+
+        if (!allowedTypes.includes(file.type)) {
+            verifyResult.innerHTML = "<span style='color:red'>File type not supported! Only PNG, JPG, JPEG allowed.</span>";
+            verifySelectedFile = null;
+            return;
+        }
+
+        verifySelectedFile = file;
+        renderVerifyPreview();
+        verifyFileInput.value = "";
+    });
+
+
+    /* ================= PREVIEW RENDER ================= */
+
+    function renderPreview() {
+
+        signaturePreview.innerHTML = "";
+
+        selectedFiles.forEach((file, index) => {
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "preview-item";
+
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+
+            img.addEventListener("click", () => openFullImage(img.src));
+
+            const removeBtn = document.createElement("div");
+            removeBtn.className = "remove-btn";
+            removeBtn.innerHTML = "✖";
+
+            removeBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                selectedFiles.splice(index, 1);
+                renderPreview();
+            });
+
+            wrapper.appendChild(img);
+            wrapper.appendChild(removeBtn);
+            signaturePreview.appendChild(wrapper);
+        });
+    }
+
+    function renderVerifyPreview() {
+
+        verifyPreview.innerHTML = "";
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "preview-item";
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(verifySelectedFile);
+
+        img.addEventListener("click", () => openFullImage(img.src));
+
+        const removeBtn = document.createElement("div");
+        removeBtn.className = "remove-btn";
+        removeBtn.innerHTML = "✖";
+
+        removeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            verifySelectedFile = null;
+            verifyPreview.innerHTML = "";
+        });
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeBtn);
+        verifyPreview.appendChild(wrapper);
+    }
+
+
+    /* ================= SAVE VALIDATION ================= */
+
+    saveBtn.addEventListener("click", () => {
+
+        warningBox.innerText = "";
+
+        const customerName = document.getElementById("customerName").value.trim();
+        const customerId = document.getElementById("customerId").value.trim();
+
+        // Check Name
+        if (customerName === "") {
+            warningBox.innerText = "Customer Name is required.";
+            return;
+        }
+
+        // Check ID
+        if (customerId === "") {
+            warningBox.innerText = "Customer ID is required.";
+            return;
+        }
+
+        // Check minimum images
+        if (selectedFiles.length < minFiles) {
+            warningBox.innerText = "Minimum 6 images required.";
+            return;
+        }
+
+        // Check maximum images
+        if (selectedFiles.length > maxFiles) {
+            warningBox.innerText = "Maximum 12 images allowed.";
+            return;
+        }
+
+        // If everything is valid → send to backend
+
+        const formData = new FormData();
+
+        formData.append("customerName", customerName);
+        formData.append("customerId", customerId);
+
+        selectedFiles.forEach(file => {
+            formData.append("signatures", file);
+        });
+
+        fetch("http://127.0.0.1:5000/add-customer", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.success) {
+
+                    alert("Customer Saved Successfully!");
+
+                    // Reset inputs
+                    document.getElementById("customerName").value = "";
+                    document.getElementById("customerId").value = "";
+
+                    selectedFiles = [];
+                    signaturePreview.innerHTML = "";
+                    signatureInput.value = "";
+
+                    warningBox.innerText = "";
+
+                    closePopup();
+
+                } else {
+                    warningBox.innerText = data.error || data.message || "Failed to save customer.";
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+                warningBox.innerText = "Server error. Make sure Flask backend is running.";
+            });
+
+    });
+
+
+    /* ================= VERIFY VALIDATION ================= */
+
+    verifyBtn?.addEventListener("click", () => {
+
+        verifyResult.innerHTML = "";
+
+        const verifyId = document.getElementById("verifyId").value.trim();
+
+        if (verifyId === "") {
+            verifyResult.innerHTML = "<span style='color:red'>Customer ID is required.</span>";
+            return;
+        }
+
+        if (!verifySelectedFile) {
+            verifyResult.innerHTML = "<span style='color:red'>Please upload a signature to verify.</span>";
+            return;
+        }
+
+        // If validation passes, trigger external verification logic
+        document.dispatchEvent(new CustomEvent("verifyFormValid", {
+            detail: {
+                customerId: verifyId,
+                file: verifySelectedFile
+            }
+        }));
+
+    });
+
+
+    /* ================= FULL SCREEN VIEW ================= */
+
+    function openFullImage(src) {
+
+        const overlay = document.createElement("div");
+        overlay.id = "imageOverlay";
+        overlay.style.position = "fixed";
+        overlay.style.inset = "0";
+        overlay.style.background = "rgba(0,0,0,0.85)";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.zIndex = "10000";
+
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.maxWidth = "90%";
+        img.style.maxHeight = "90%";
+
+        const closeBtn = document.createElement("div");
+        closeBtn.innerHTML = "✖";
+        closeBtn.style.position = "absolute";
+        closeBtn.style.top = "25px";
+        closeBtn.style.right = "35px";
+        closeBtn.style.fontSize = "28px";
+        closeBtn.style.color = "white";
+        closeBtn.style.cursor = "pointer";
+
+        overlay.appendChild(img);
+        overlay.appendChild(closeBtn);
+        document.body.appendChild(overlay);
+
+        function closeViewer() {
+            document.body.removeChild(overlay);
+        }
+
+        closeBtn.addEventListener("click", closeViewer);
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) closeViewer();
+        });
+
+    }
+
+});
+/* ================= VERIFY API CALL ================= */
+
+document.addEventListener("verifyFormValid", function (event) {
+
+    const customerId = event.detail.customerId;
+    const file = event.detail.file;
+
+    const formData = new FormData();
+
+    formData.append("customerId", customerId);
+    formData.append("signature", file);
+
+    fetch("http://127.0.0.1:5000/verify-signature", {
+        method: "POST",
+        body: formData
+    })
+        .then(res => res.json())
+        .then(data => {
+
+            const resultBox = document.getElementById("verifyResult");
+
+            if (!data.success) {
+                resultBox.innerHTML = `<span style="color:red">${data.error}</span>`;
+                return;
+            }
+
+            if (data.isGenuine) {
+
+                resultBox.innerHTML = `
+                <span style="color:#0ed90e;;font-weight:500">
+                Genuine Signature
+                </span><br>
+                Confidence: ${data.confidence}%`;
+
+            } else {
+
+                resultBox.innerHTML = `
+                <span style="color:red;font-weight:500">
+                Forged Signature
+                </span><br>
+                Confidence: ${data.confidence}%`;
+            }
+
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById("verifyResult").innerText =
+                "Server error. Is Flask running?";
+        });
+
+});
